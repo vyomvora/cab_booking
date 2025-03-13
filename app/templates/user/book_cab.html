@@ -1,0 +1,86 @@
+<!-- templates/user/book_cab.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Cab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book_cab.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="booking-card">
+            <h1 class="page-title">Book a Cab</h1>
+            
+            <form id="bookingForm" method="POST" action="{{ url_for('user.book_cab') }}">
+                <div class="location-input-container">
+                    <label for="pickup"><i class="location-icon pickup-icon"></i>Pickup Location</label>
+                    <input type="text" id="pickup" name="pickup" placeholder="Enter pickup location" required>
+                    <div id="pickup-details" class="location-details"></div>
+                    <input type="hidden" id="pickup_lat" name="pickup_lat">
+                    <input type="hidden" id="pickup_lng" name="pickup_lng">
+                    <input type="hidden" id="pickup_address" name="pickup_address">
+                </div>
+                
+                <div class="location-input-container">
+                    <label for="dropoff"><i class="location-icon dropoff-icon"></i>Drop-off Location</label>
+                    <input type="text" id="dropoff" name="dropoff" placeholder="Enter drop-off location" required>
+                    <div id="dropoff-details" class="location-details"></div>
+                    <input type="hidden" id="dropoff_lat" name="dropoff_lat">
+                    <input type="hidden" id="dropoff_lng" name="dropoff_lng">
+                    <input type="hidden" id="dropoff_address" name="dropoff_address">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date"><i class="calendar-icon"></i>Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time"><i class="clock-icon"></i>Time</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="car_type"><i class="car-icon"></i>Car Type</label>
+                    <select id="car_type" name="car_type" required>
+                        <option value="">Select a car type</option>
+                        {% for car in cars %}
+                        <option value="{{ car.id }}" data-rate-per-km="{{ car.rate_per_km }}">
+                            {{ car.model }} ({{ car.registration_number }}) - €{{ car.rate_per_km }} per km
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div id="trip-details" class="trip-details-card">
+                    <h3 class="trip-details-title">Trip Details</h3>
+                    <div class="trip-detail">
+                        <span class="detail-label">Estimated distance:</span>
+                        <span id="distance" class="detail-value">-</span>
+                    </div>
+                    <div class="trip-detail">
+                        <span class="detail-label">Estimated duration:</span>
+                        <span id="duration" class="detail-value">-</span>
+                    </div>
+                    <div class="trip-detail fare">
+                        <span class="detail-label">Estimated fare:</span>
+                        <span id="fare" class="detail-value">-</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-book">Book Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/book_cab.js') }}"></script>
+    
+    <!-- Load Google Maps JavaScript API with your API key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key|default('AIzaSyALaK60mN_SCmnYnn2nuEp9KMyd4UvATDk') }}&libraries=places,geometry&callback=initAutocomplete" async defer></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Cab Booking System{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Cab Booking System</h1>
+    <p class="lead">Book your cab with just a few clicks and travel with comfort and safety.</p>
+    <hr class="my-4">
+    <p>Choose your role to get started:</p>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">User</h5>
+                    <p class="card-text">Book cabs, manage your bookings, and enjoy hassle-free travel.</p>
+                    <div class="d-flex flex-column mt-4">
+                        <a href="{{ url_for('auth.user_login') }}" class="btn btn-primary mb-2">Login</a>
+                        <a href="{{ url_for('auth.user_signup') }}" class="btn btn-outline-primary">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Admin</h5>
+                    <p class="card-text">Manage cars, monitor bookings, and oversee the entire system.</p>
+                    <div class="mt-4">
+                        <a href="{{ url_for('auth.admin_login') }}" class="btn btn-danger">Admin Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"><i class="fas fa-car"></i> Wide Selection</h3>
+                <p class="card-text">Choose from a variety of cars to suit your needs and budget.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"><i class="fas fa-shield-alt"></i> Safe & Secure</h3>
+                <p class="card-text">All our rides are monitored and your data is kept secure.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"><i class="fas fa-clock"></i> 24/7 Service</h3>
+                <p class="card-text">Book a cab anytime, day or night, we're always available.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

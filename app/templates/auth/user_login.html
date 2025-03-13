@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>User Login</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <p>Don't have an account? <a href="{{ url_for('auth.user_signup') }}">Sign Up</a></p>
+                        <p>Are you an admin? <a href="{{ url_for('auth.admin_login') }}">Login as Admin</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

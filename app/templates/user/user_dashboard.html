@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome, {{ current_user.name }}</h1>
+    <div class="mb-4">
+        <a href="{{ url_for('user.book_cab') }}" class="btn btn-primary">Book a Cab</a>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger float-right">Logout</a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h3>Your Bookings</h3>
+            <ul class="nav nav-tabs card-header-tabs" id="bookingTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="confirmed-tab" data-toggle="tab" href="#confirmed" role="tab">Confirmed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled" role="tab">Cancelled</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="modified-tab" data-toggle="tab" href="#modified" role="tab">Modified</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="bookingTabsContent">
+                <div class="tab-pane fade show active" id="all" role="tabpanel">
+                    {% if bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Car</th>
+                                        <th>Fare</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in bookings %}
+                                    <tr class="booking-row {{ booking.status }}">
+                                        <td>{{ booking.journey_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ booking.pickup_address }}</td>
+                                        <td>{{ booking.dropoff_address }}</td>
+                                        <td>{{ booking.vehicle.model }}</td>
+                                        <td>€{{ "%.2f"|format(booking.estimated_fare) }}</td>
+                                        <td>
+                                            <span class="badge
+                                                {% if booking.status == 'confirmed' %}badge-success
+                                                {% elif booking.status == 'cancelled' %}badge-danger
+                                                {% elif booking.status == 'modified' %}badge-info
+                                                {% endif %}">
+                                                {{ booking.status|title }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {% if booking.status == 'confirmed' or booking.status == 'modified' %}
+                                            <form action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" method="post" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
+                                            </form>
+                                            {% if booking.status == 'confirmed' %}
+                                            <a href="{{ url_for('user.modify_booking', booking_id=booking.id) }}" class="btn btn-sm btn-warning">Modify</a>
+                                            {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No bookings found.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Confirmed Tab -->
+                <div class="tab-pane fade" id="confirmed" role="tabpanel">
+                    {% set confirmed_bookings = bookings|selectattr('status', 'equalto', 'confirmed')|list %}
+                    {% if confirmed_bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Car</th>
+                                        <th>Fare</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in confirmed_bookings %}
+                                    <tr>
+                                        <td>{{ booking.journey_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ booking.pickup_address }}</td>
+                                        <td>{{ booking.dropoff_address }}</td>
+                                        <td>{{ booking.vehicle.model }}</td>
+                                        <td>€{{ "%.2f"|format(booking.estimated_fare) }}</td>
+                                        <td>
+                                            <form action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" method="post" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
+                                            </form>
+                                            <a href="{{ url_for('user.modify_booking', booking_id=booking.id) }}" class="btn btn-sm btn-warning">Modify</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No confirmed bookings.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Cancelled Tab -->
+                <div class="tab-pane fade" id="cancelled" role="tabpanel">
+                    {% set cancelled_bookings = bookings|selectattr('status', 'equalto', 'cancelled')|list %}
+                    {% if cancelled_bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Car</th>
+                                        <th>Fare</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in cancelled_bookings %}
+                                    <tr>
+                                        <td>{{ booking.journey_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ booking.pickup_address }}</td>
+                                        <td>{{ booking.dropoff_address }}</td>
+                                        <td>{{ booking.vehicle.model }}</td>
+                                        <td>€{{ "%.2f"|format(booking.estimated_fare) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No cancelled bookings.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Modified Tab -->
+                <!-- Modified Tab -->
+                <div class="tab-pane fade" id="modified" role="tabpanel">
+                    {% set modified_bookings = bookings|selectattr('status', 'equalto', 'modified')|list %}
+                    {% if modified_bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Car</th>
+                                        <th>Fare</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in modified_bookings %}
+                                    <tr>
+                                        <td>{{ booking.journey_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ booking.pickup_address }}</td>
+                                        <td>{{ booking.dropoff_address }}</td>
+                                        <td>{{ booking.vehicle.model }}</td>
+                                        <td>€{{ "%.2f"|format(booking.estimated_fare) }}</td>
+                                        <td>
+                                            <form action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" method="post" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No modified bookings.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
