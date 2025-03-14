@@ -9,9 +9,9 @@ phases:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
       - pip install pylint
-      - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      - unzip sonar-scanner.zip
-      - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
+      # - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      # - unzip sonar-scanner.zip
+      # - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
 
   build:
     commands:
