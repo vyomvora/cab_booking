@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.13
+      java: corretto8
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt
+      - pip install pylint
+      - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip sonar-scanner.zip
+      - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
+
+  build:
+    commands:
+      - echo "Running Pylint static analysis..."
+      - pylint $(git ls-files '*.py') --fail-under=7  # Ensures code meets minimum quality score
+      - echo "Running SonarQube security analysis..."
+      - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://http://3.250.106.200:9000 -Dsonar.login=sqa_15f216769281184457ce0f01dad721f6d8344df7
+
+  post_build:
+    commands:
+      - echo "Preparing for deployment..."
+      - zip -r cab-booking-app.zip .  # Zip all files for Elastic Beanstalk
+      - aws s3 cp cab-booking-app.zip s3://<YOUR-S3-BUCKET>/  # Upload to S3
+
+artifacts:
+  files:
+    - cab-booking-app.zip
