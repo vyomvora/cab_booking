@@ -18,7 +18,7 @@ phases:
       - echo "Running Pylint static analysis..."
       - echo "doing ls"
       - ls
-      - pylint **/*.py--fail-under=7;
+      - pylint **/*.py
       - echo "Running SonarQube security analysis..."
       # - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_15f216769281184457ce0f01dad721f6d8344df7
 
