@@ -8,9 +8,9 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
-      # - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-      # - unzip sonar-scanner.zip
-      # - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
+      - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - unzip sonar-scanner.zip
+      - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
 
   build:
     commands:
@@ -19,7 +19,7 @@ phases:
       - ls
       - find . -name "*.py" | xargs pylint --fail-under=7
       - echo "Running SonarQube security analysis..."
-      # - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_15f216769281184457ce0f01dad721f6d8344df7
+      - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_83f6d10852b8673122895d026cfaacd042d6b26f
 
   # post_build:
   #   commands:
