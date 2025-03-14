@@ -8,7 +8,6 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
-      - pip install pylint
       # - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       # - unzip sonar-scanner.zip
       # - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
@@ -28,6 +27,6 @@ phases:
   #     - zip -r cab-booking-app.zip . 
   #     - aws s3 cp cab-booking-app.zip s3://<YOUR-S3-BUCKET>/  
 
-artifacts:
-  files:
-    - cab-booking-app.zip
+# artifacts:
+#   files:
+#     - cab-booking-app.zip
