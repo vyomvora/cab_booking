@@ -18,18 +18,15 @@ phases:
       - echo "Running Pylint static analysis..."
       - echo "doing ls"
       - ls
-      -
-      # - FILES=$(find . -name "*.py" || true)
-      #- pylint $(git ls-files '*.py') --fail-under=7  # Ensures code meets minimum quality score
-      # - pylint $FILES --fail-under=7;
+      - pylint **/*.py--fail-under=7;
       - echo "Running SonarQube security analysis..."
-      - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_15f216769281184457ce0f01dad721f6d8344df7
+      # - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_15f216769281184457ce0f01dad721f6d8344df7
 
-  post_build:
-    commands:
-      - echo "Preparing for deployment..."
-      - zip -r cab-booking-app.zip . 
-      - aws s3 cp cab-booking-app.zip s3://<YOUR-S3-BUCKET>/  
+  # post_build:
+  #   commands:
+  #     - echo "Preparing for deployment..."
+  #     - zip -r cab-booking-app.zip . 
+  #     - aws s3 cp cab-booking-app.zip s3://<YOUR-S3-BUCKET>/  
 
 artifacts:
   files:
