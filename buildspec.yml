@@ -29,10 +29,10 @@ phases:
   post_build:
     commands:
       - echo "Preparing for deployment..."
-      - echo "Create new ElasticBeanstalk Applicaiton Version"
-      - aws elasticbeanstalk create-application-version --application-name 23410698_vyom_cab_booking --version-label v1 --source-bundle S3Bucket="23410698-cab-booking",S3Key="cab-booking-app.zip"
-      - aws elasticbeanstalk update-environment --application-name 23410698_vyom_cab_booking --environment-name 23410698vyomcabbooking-env --version-label v1
-      - echo "Deployment done successfully!!"
+      # - echo "Create new ElasticBeanstalk Applicaiton Version"
+      # - aws elasticbeanstalk create-application-version --application-name 23410698_vyom_cab_booking --version-label v1 --source-bundle S3Bucket="23410698-cab-booking",S3Key="cab-booking-app.zip"
+      # - aws elasticbeanstalk update-environment --application-name 23410698_vyom_cab_booking --environment-name 23410698vyomcabbooking-env --version-label v1
+      # - echo "Deployment done successfully!!"
         
 
 artifacts:
