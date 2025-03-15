@@ -13,6 +13,7 @@ phases:
       - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
       - echo "Create ZIP deployment package"
       - zip -r "car-booking-app" . 
+      - ls
       - echo "Copying zip to S3"
       - aws s3 cp cab-booking-app.zip s3://23410698-cab-booking/  
   
