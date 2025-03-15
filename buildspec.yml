@@ -11,10 +11,9 @@ phases:
       - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip sonar-scanner.zip
       - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
-  send_project_to_s3:
-    commands:
       - echo "Create ZIP deployment package"
       - zip -r "car-booking-app" . 
+      - echo "Copying zip to S3"
       - aws s3 cp cab-booking-app.zip s3://23410698-cab-booking/  
   
 
