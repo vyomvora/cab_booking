@@ -24,15 +24,15 @@ phases:
       - ls
       - find . -name "*.py" | xargs pylint --fail-under=7
       - echo "Running SonarQube security analysis..."
-      - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_83f6d10852b8673122895d026cfaacd042d6b26f
+      - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://3.250.106.200:9000 -Dsonar.login=sqa_625ebcbbe230c552b7bb3d8e1a2aedb530687256
 
-  post_build:
-    commands:
-      - echo "Preparing for deployment..."
-      # - echo "Create new ElasticBeanstalk Applicaiton Version"
-      # - aws elasticbeanstalk create-application-version --application-name 23410698_vyom_cab_booking --version-label v1 --source-bundle S3Bucket="23410698-cab-booking",S3Key="cab-booking-app.zip"
-      # - aws elasticbeanstalk update-environment --application-name 23410698_vyom_cab_booking --environment-name 23410698vyomcabbooking-env --version-label v1
-      # - echo "Deployment done successfully!!"
+  # post_build:
+  #   commands:
+  #     - echo "Preparing for deployment..."
+  #     # - echo "Create new ElasticBeanstalk Applicaiton Version"
+  #     # - aws elasticbeanstalk create-application-version --application-name 23410698_vyom_cab_booking --version-label v1 --source-bundle S3Bucket="23410698-cab-booking",S3Key="cab-booking-app.zip"
+  #     # - aws elasticbeanstalk update-environment --application-name 23410698_vyom_cab_booking --environment-name 23410698vyomcabbooking-env --version-label v1
+  #     # - echo "Deployment done successfully!!"
         
 
 artifacts:
