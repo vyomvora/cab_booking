@@ -51,7 +51,7 @@
                         <option value="">Select a car type</option>
                         {% for car in cars %}
                         <option value="{{ car.id }}" data-rate-per-km="{{ car.rate_per_km }}">
-                            {{ car.model }} ({{ car.registration_number }}) - €{{ car.rate_per_km }} per km
+                            {{ car.model }} - €{{ car.rate_per_km }} per km
                         </option>
                         {% endfor %}
                     </select>

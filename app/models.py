@@ -82,7 +82,6 @@ class Car(db.Model):
     Attributes:
         id (int): Primary key.
         model (str): Car's name
-        registration_number (str): Car's registration number
         capacity(int): Car's seating capacity
         rate_per_km(float): Car's fare per km
         is_available(bool):  Whether car is available or not
@@ -91,7 +90,6 @@ class Car(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String(100), nullable=False)
-    registration_number = db.Column(db.String(20), unique=True, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     rate_per_km = db.Column(db.Float, nullable=False)
     is_available = db.Column(db.Boolean, default=True)

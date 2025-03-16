@@ -1,4 +1,5 @@
 """This module defines admin's route for their functions"""
+import re
 from functools import wraps
 from sqlalchemy.exc import SQLAlchemyError
 from flask import Blueprint, render_template, redirect, url_for, flash, request
@@ -31,6 +32,52 @@ def dashboard():
     cars = Car.query.all()
     return render_template('admin/admin_dashboard.html', cars=cars)
 
+@admin.route('/admin/admin_profile', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def admin_profile():
+    """
+    This function allows admin to view and update their profile information.
+    """
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+        
+        # Validate current password
+        if not current_user.check_password(current_password):
+            flash('Current password is incorrect', 'danger')
+            return redirect(url_for('admin.admin_profile'))
+        
+        # Check if new passwords match
+        if new_password != confirm_password:
+            flash('New passwords do not match', 'danger')
+            return redirect(url_for('admin.admin_profile'))
+            
+        # Password validation
+        if len(new_password) < 8:
+            flash('Password must be at least 8 characters long', 'danger')
+            return redirect(url_for('admin.admin_profile'))
+            
+        if not re.search(r'\d', new_password):
+            flash('Password must contain at least one number', 'danger')
+            return redirect(url_for('admin.admin_profile'))
+            
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', new_password):
+            flash('Password must contain at least one special character', 'danger')
+            return redirect(url_for('admin.admin_profile'))
+        
+        try:
+            current_user.set_password(new_password)
+            db.session.commit()
+            flash('Password changed successfully', 'success')
+            return redirect(url_for('admin.admin_profile'))
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            flash(f'Error changing password: {str(e)}', 'danger')
+
+    return render_template('admin/admin_profile.html')
+
 @admin.route('/admin/add_car', methods=['GET', 'POST'])
 @login_required
 @admin_required
@@ -40,19 +87,12 @@ def add_car():
     """
     if request.method == 'POST':
         model = request.form.get('model')
-        registration_number = request.form.get('registration_number')
         capacity = request.form.get('capacity')
         rate_per_km = request.form.get('rate_per_km')
-
-        # Validation
-        if Car.query.filter_by(registration_number=registration_number).first():
-            flash('Car with this registration number already exists', 'danger')
-            return render_template('admin/add_car.html')
 
         try:
             car = Car(
                 model=model,
-                registration_number=registration_number,
                 capacity=int(capacity),
                 rate_per_km=float(rate_per_km),
                 is_available=True

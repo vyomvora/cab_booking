@@ -24,14 +24,14 @@
                                 <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('admin.add_car') }}">Add Car</a>
+                                <a class="nav-link" href="{{ url_for('admin.admin_profile') }}">Admin Profile</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('user.dashboard') }}">Dashboard</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('user.book_cab') }}">Book a Cab</a>
+                                <a class="nav-link" href="{{ url_for('user.user_profile') }}">User Profile</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">

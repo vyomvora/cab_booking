@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}Welcome to Cab Booking System{% endblock %}
+{% block title %}Welcome to Cab Booking{% endblock %}
 
 {% block content %}
 <div class="jumbotron text-center">
-    <h1 class="display-4">Welcome to Cab Booking System</h1>
-    <p class="lead">Book your cab with just a few clicks and travel with comfort and safety.</p>
+    <h1 class="display-4">Welcome to Cab Booking</h1>
     <hr class="my-4">
-    <p>Choose your role to get started:</p>
+    <p>Choose to get started:</p>
     <div class="row justify-content-center mt-5">
         <div class="col-md-4 mb-4">
             <div class="card h-100 shadow-lg">
                 <div class="card-body text-center">
                     <h5 class="card-title">User</h5>
-                    <p class="card-text">Book cabs, manage your bookings, and enjoy hassle-free travel.</p>
+                    <p class="card-text">Book cabs, manage your bookings</p>
                     <div class="d-flex flex-column mt-4">
                         <a href="{{ url_for('auth.user_login') }}" class="btn btn-primary mb-2">Login</a>
                         <a href="{{ url_for('auth.user_signup') }}" class="btn btn-outline-primary">Sign Up</a>
@@ -25,7 +24,7 @@
             <div class="card h-100 shadow-lg">
                 <div class="card-body text-center">
                     <h5 class="card-title">Admin</h5>
-                    <p class="card-text">Manage cars, monitor bookings, and oversee the entire system.</p>
+                    <p class="card-text">Manage cars, monitor bookings</p>
                     <div class="mt-4">
                         <a href="{{ url_for('auth.admin_login') }}" class="btn btn-danger">Admin Login</a>
                     </div>
