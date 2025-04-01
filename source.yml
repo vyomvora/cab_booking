@@ -1,0 +1,11 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Fetching source code..."
+      - ls -la
+
+artifacts:
+  files:
+    - '**/*' 
