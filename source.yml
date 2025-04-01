@@ -4,7 +4,7 @@ phases:
   build:
     commands:
       - echo "Fetching source code..."
-      - ls -la
+      - ls -la 
 
 artifacts:
   files:
