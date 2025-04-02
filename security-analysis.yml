@@ -1,3 +1,31 @@
+# version: 0.2
+
+# phases:
+#   install:
+#     runtime-versions:
+#       java: corretto8
+#     commands:
+#       - echo "Installing SonarQube scanner..."
+#       - yum install -y jq
+#       - export SECRETS=$(aws secretsmanager get-secret-value --secret-id 23410698_sonarqube_creds --query SecretString --output text)
+#       - export SONARQUBE_URL=$(echo $SECRETS | jq -r '.SONARQUBE_URL')
+#       - export SONARQUBE_TOKEN=$(echo $SECRETS | jq -r '.SONARQUBE_TOKEN')
+
+#       - curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+#       - unzip sonar-scanner.zip
+#       - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
+
+#   build:
+#     commands:
+#       - echo "Running SonarQube security analysis..."
+#       - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONARQUBE_TOKEN
+
+
+# artifacts:
+#   files:
+#     - '**/*'
+
+
 version: 0.2
 
 phases:
@@ -18,8 +46,15 @@ phases:
   build:
     commands:
       - echo "Running SonarQube security analysis..."
-      - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONARQUBE_TOKEN
-
+      - sonar-scanner \
+          -Dsonar.projectKey=cab-booking \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=$SONARQUBE_URL \
+          -Dsonar.login=$SONARQUBE_TOKEN \
+          -Dsonar.python.coverage.reportPaths=test-reports/coverage.xml \
+          -Dsonar.junit.reportPaths=test-reports/junit.xml \
+          -Dsonar.python.xunit.reportPath=test-reports/junit.xml \
+          -Dsonar.python.xunit.skipDetails=false
 
 artifacts:
   files:
