@@ -9,12 +9,14 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required, current_user
 from app.models import Car, Booking,User
 from app.email_templates import send_booking_confirmation,send_booking_modification_email,send_booking_cancellation_email
-from config import GOOGLE_MAPS_API_KEY
+from config import Config
 from app import db
 
 # Get the secret
 
-gmaps = googlemaps.Client(key=GOOGLE_MAPS_API_KEY)
+google_maps_api_key = Config.GOOGLE_MAPS_API_KEY
+
+gmaps = googlemaps.Client(key=google_maps_api_key)
 
 user = Blueprint('user', __name__)
 
@@ -213,7 +215,7 @@ def book_cab():
 
     # GET request - show booking form
     cars = Car.query.filter_by(is_available=True).all()
-    return render_template('user/book_cab.html', cars=cars,google_maps_api_key=GOOGLE_MAPS_API_KEY)
+    return render_template('user/book_cab.html', cars=cars,google_maps_api_key=google_maps_api_key)
 
 @user.route('/cancel_booking/<int:booking_id>', methods=['POST'])
 @login_required
@@ -390,5 +392,5 @@ def modify_booking(booking_id):
         'user/modify_booking.html', 
         booking=booking,
         cars=cars,
-        google_maps_api_key = "GOOGLE_MAPS_API_KEY"
+        google_maps_api_key = google_maps_api_key
     )

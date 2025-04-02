@@ -8,7 +8,7 @@ phases:
       - echo "Fetching Google Maps API from AWS Secrets Manager"
       - export GOOGLEMAPSAPI_SECRETS=$(aws secretsmanager get-secret-value --secret-id 23410698_gmaps_api_key --query SecretString --output text)
       - export GOOGLE_MAPS_API_KEY=$(echo $GOOGLEMAPSAPI_SECRETS | jq -r '.GOOGLE_MAPS_API_KEY')
-      - sed -i "s|CONFIG_GOOGLE_MAPS_API_KEY|$GOOGLE_MAPS_API_KEY|g" /var/app/current/config.py
+      - sed -i "s|CONFIG_GOOGLE_MAPS_API_KEY|$GOOGLE_MAPS_API_KEY|g" config.py
 
       - echo "Installing SonarQube scanner..."
       - yum install -y jq
