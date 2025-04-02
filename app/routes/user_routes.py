@@ -13,13 +13,9 @@ from app.utils import get_secret
 from app import db
 
 # Get the secret
-# secret_name = "23410698_gmaps_api_key"
-# region_name = "eu-west-1"
-# secret_data = get_secret(secret_name, region_name)
-# print(secret_data)
+print("os list",os.listdir())
 google_maps_api_key = os.getenv("GOOGLE_MAPS_API_KEY")
 print("google_maps_api_key",google_maps_api_key)
-# google_maps_api_key = secret_data['GOOGLE_MAPS_API_KEY']
 
 gmaps = googlemaps.Client(key=google_maps_api_key)
 
