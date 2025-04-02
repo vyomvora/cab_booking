@@ -13,12 +13,13 @@ from config import Config
 from app import db
 
 # Get the secret
+def read_google_maps_api_key():
+    with open("google_maps_api_key.txt", "r") as file:
+        google_maps_api_key = file.read().strip()
+    return google_maps_api_key
 
-# google_maps_api_key = Config.GOOGLE_MAPS_API_KEY
-trial_google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
-print("trialllll key",trial_google_maps_api_key)
-google_maps_api_key = "GOOGLE_API_FROM_SECRET"
-print("google_maps_api_key",google_maps_api_key)
+google_maps_api_key = read_google_maps_api_key()
+print("goolge maps api", google_maps_api_key)
 
 gmaps = googlemaps.Client(key=google_maps_api_key)
 
