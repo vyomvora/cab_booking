@@ -9,9 +9,21 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required, current_user
 from app.models import Car, Booking,User
 from app.email_templates import send_booking_confirmation,send_booking_modification_email,send_booking_cancellation_email
+from app.utils import get_secret
 from app import db
 
-gmaps = googlemaps.Client(key=os.environ.get('GOOGLE_MAPS_API_KEY', 'AIzaSyALaK60mN_SCmnYnn2nuEp9KMyd4UvATDk'))
+# Get the secret
+secret_name = "gmaps"
+region_name = "us-east-1"
+secret_data = get_secret(secret_name, region_name)
+
+# Extract Google Maps API key
+if secret_data and 'GOOGLE_MAPS_API_KEY' in secret_data:
+    google_maps_api_key = secret_data['GOOGLE_MAPS_API_KEY']
+else:
+    raise ValueError("GOOGLE_MAPS_API_KEY not found in Secrets Manager")
+
+gmaps = googlemaps.Client(key=google_maps_api_key)
 
 user = Blueprint('user', __name__)
 
@@ -210,7 +222,7 @@ def book_cab():
 
     # GET request - show booking form
     cars = Car.query.filter_by(is_available=True).all()
-    return render_template('user/book_cab.html', cars=cars)
+    return render_template('user/book_cab.html', cars=cars,google_maps_api_key=google_maps_api_key)
 
 @user.route('/cancel_booking/<int:booking_id>', methods=['POST'])
 @login_required
@@ -387,4 +399,5 @@ def modify_booking(booking_id):
         'user/modify_booking.html', 
         booking=booking,
         cars=cars,
+        google_maps_api_key = google_maps_api_key
     )

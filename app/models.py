@@ -8,9 +8,9 @@ from app import db, login_manager, bcrypt
 def load_user(user_id):
     # Check if user_id starts with "admin_" or "user_"
     if user_id.startswith("admin_"):
-        user_id = user_id[6:]  # Remove "admin_" prefix
+        user_id = user_id[6:]
         return Admin.query.get(int(user_id))
-    user_id = user_id[5:]  # Remove "user_" prefix
+    user_id = user_id[5:]
     return User.query.get(int(user_id))
 
 class Admin(db.Model, UserMixin):
