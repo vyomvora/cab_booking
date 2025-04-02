@@ -16,6 +16,7 @@ from app import db
 secret_name = "gmaps"
 region_name = "us-east-1"
 secret_data = get_secret(secret_name, region_name)
+print(secret_data)
 google_maps_api_key = secret_data['GOOGLE_MAPS_API_KEY']
 
 gmaps = googlemaps.Client(key=google_maps_api_key)
