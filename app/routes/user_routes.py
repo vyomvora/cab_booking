@@ -13,8 +13,8 @@ from app.utils import get_secret
 from app import db
 
 # Get the secret
-secret_name = "gmaps"
-region_name = "us-east-1"
+secret_name = "23410698_gmaps_api_key"
+region_name = "eu-west-1"
 secret_data = get_secret(secret_name, region_name)
 print(secret_data)
 google_maps_api_key = secret_data['GOOGLE_MAPS_API_KEY']

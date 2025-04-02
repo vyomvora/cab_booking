@@ -7,7 +7,7 @@ phases:
     commands:
       - echo "Installing SonarQube scanner..."
       - yum install -y jq
-      - export SECRETS=$(aws secretsmanager get-secret-value --secret-id sonarqube_creds --query SecretString --output text)
+      - export SECRETS=$(aws secretsmanager get-secret-value --secret-id 23410698_sonarqube_creds --query SecretString --output text)
       - export SONARQUBE_URL=$(echo $SECRETS | jq -r '.SONARQUBE_URL')
       - export SONARQUBE_TOKEN=$(echo $SECRETS | jq -r '.SONARQUBE_TOKEN')
 
@@ -18,7 +18,6 @@ phases:
   build:
     commands:
       - echo "Running SonarQube security analysis..."
-      # - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=http://108.129.111.133:8000 -Dsonar.login=sqa_06c4f4774a65e442659208d8b3afa9bd57b2a8f3
       - sonar-scanner -Dsonar.projectKey=cab-booking -Dsonar.sources=. -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONARQUBE_TOKEN
 
 
