@@ -1,18 +1,48 @@
+# version: 0.2
+
+# phases:
+#   install:
+#     runtime-versions:
+#       python: 3.13
+#     commands:
+#       - echo "Installing dependencies..."
+#       - pip install -r requirements.txt
+
+#   build:
+#     commands:
+#       - echo "Running tests with pytest..."
+#       # - pytest -v
+
+# artifacts:
+#   files:
+#     - '**/*' 
+
+
 version: 0.2
 
 phases:
   install:
     runtime-versions:
-      python: 3.13
+      python: 3.13 
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
+      - pip install pytest pytest-cov junitxml 
+
+  pre_build:
+    commands:
+      - echo "Preparing test environment..."
+      - mkdir -p test-reports
 
   build:
     commands:
       - echo "Running tests with pytest..."
-      # - pytest -v
+      - pytest -v --cov=. --junitxml=test-reports/junit.xml --cov-report=xml:test-reports/coverage.xml
+      - echo "Test results:"
+      - cat test-reports/junit.xml | grep "testsuite"
 
 artifacts:
   files:
-    - '**/*' 
+    - 'test-reports/**/*'
+    - '**/*.py'  
+  base-directory: test-reports    
