@@ -16,12 +16,7 @@ from app import db
 secret_name = "gmaps"
 region_name = "us-east-1"
 secret_data = get_secret(secret_name, region_name)
-
-# Extract Google Maps API key
-if secret_data and 'GOOGLE_MAPS_API_KEY' in secret_data:
-    google_maps_api_key = secret_data['GOOGLE_MAPS_API_KEY']
-else:
-    raise ValueError("GOOGLE_MAPS_API_KEY not found in Secrets Manager")
+google_maps_api_key = secret_data['GOOGLE_MAPS_API_KEY']
 
 gmaps = googlemaps.Client(key=google_maps_api_key)
 
