@@ -15,6 +15,7 @@ from app import db
 # Get the secret
 
 google_maps_api_key = Config.GOOGLE_MAPS_API_KEY
+google_maps_api_key = "GOOGLE_API_FROM_SECRET"
 print("google_maps_api_key",google_maps_api_key)
 
 gmaps = googlemaps.Client(key=google_maps_api_key)

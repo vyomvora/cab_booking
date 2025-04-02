@@ -11,6 +11,7 @@ phases:
       - echo "GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY"  # Checking if the variable is fetched
 
       - sed -i "s|CONFIG_GOOGLE_MAPS_API_KEY|$GOOGLE_MAPS_API_KEY|g" config.py
+      - sed -i "s|GOOGLE_API_FROM_SECRET|$GOOGLE_MAPS_API_KEY|g" app/routes/user_routes.py
       - cat config.py
       - echo "Installing SonarQube scanner..."
       - yum install -y jq
