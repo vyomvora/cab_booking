@@ -7,7 +7,6 @@ phases:
     commands:
       - echo "Fetching Google Maps API from AWS Secrets Manager"
       - export GOOGLEMAPSAPI_SECRETS=$(aws secretsmanager get-secret-value --secret-id 23410698_gmaps_api_key --query SecretString --output text)
-      - echo "$GOOGLEMAPSAPI_SECRETS"
       - export GOOGLE_MAPS_API_KEY=$(echo $GOOGLEMAPSAPI_SECRETS | jq -r '.GOOGLE_MAPS_API')
       - echo "GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY"  # Checking if the variable is fetched
       - cat config.py | grep GOOGLE_MAPS_API_KEY 
