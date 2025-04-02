@@ -14,7 +14,9 @@ from app import db
 
 # Get the secret
 
-google_maps_api_key = Config.GOOGLE_MAPS_API_KEY
+# google_maps_api_key = Config.GOOGLE_MAPS_API_KEY
+trial_google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
+print("trialllll key",trial_google_maps_api_key)
 google_maps_api_key = "GOOGLE_API_FROM_SECRET"
 print("google_maps_api_key",google_maps_api_key)
 
