@@ -1,6 +1,6 @@
 """This module defines user's routes for the application"""
-import os
 import re
+import base64
 from functools import wraps
 from datetime import datetime
 import googlemaps
@@ -9,20 +9,21 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required, current_user
 from app.models import Car, Booking,User
 from app.email_templates import send_booking_confirmation,send_booking_modification_email,send_booking_cancellation_email
-from config import Config
 from app import db
 
 # Get the secret
-# def read_google_maps_api_key():
-#     with open("google_maps_api_key.txt", "r") as file:
-#         google_maps_api_key = file.read().strip()
-#     return google_maps_api_key
+try:
+    # Open the file and read the Base64-encoded key
+    with open("google_maps_api_key.txt", "r", encoding="utf-8") as file:
+        encoded_key = file.read().strip()
 
-# google_maps_api_key = read_google_maps_api_key()
-google_maps_api_key = "AIzaSyALaK60mN_SCmnYnn2nuEp9KMyd4UvATDk"
-print("goolge maps api", google_maps_api_key)
+    # Decode from Base64
+    GOOGLE_MAPS_API_KEY = base64.b64decode(encoded_key).decode("utf-8")
 
-gmaps = googlemaps.Client(key=google_maps_api_key)
+except Exception as e:
+    print("Error reading API key:", e)
+
+gmaps = googlemaps.Client(key=GOOGLE_MAPS_API_KEY)
 
 user = Blueprint('user', __name__)
 
@@ -221,7 +222,7 @@ def book_cab():
 
     # GET request - show booking form
     cars = Car.query.filter_by(is_available=True).all()
-    return render_template('user/book_cab.html', cars=cars,google_maps_api_key=google_maps_api_key)
+    return render_template('user/book_cab.html', cars=cars,google_maps_api_key=GOOGLE_MAPS_API_KEY)
 
 @user.route('/cancel_booking/<int:booking_id>', methods=['POST'])
 @login_required
@@ -398,5 +399,5 @@ def modify_booking(booking_id):
         'user/modify_booking.html', 
         booking=booking,
         cars=cars,
-        google_maps_api_key = google_maps_api_key
+        google_maps_api_key = GOOGLE_MAPS_API_KEY
     )

@@ -1,3 +1,4 @@
+"""This module creates flask app object"""
 from app import create_app
 application = create_app()
 

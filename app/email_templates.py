@@ -226,7 +226,7 @@ def send_booking_modification_email(user, booking, car, fare, original_data):
         """
         part = MIMEText(html, 'html')
         msg.attach(part)
-    
+
         #Connect to mail server and send email
         server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
         server.starttls()

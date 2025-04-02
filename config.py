@@ -10,4 +10,3 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///cab_booking.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
-    GOOGLE_MAPS_API_KEY = "CONFIG_GOOGLE_MAPS_API_KEY"

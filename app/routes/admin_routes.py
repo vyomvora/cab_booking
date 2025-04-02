@@ -43,30 +43,30 @@ def admin_profile():
         current_password = request.form.get('current_password')
         new_password = request.form.get('new_password')
         confirm_password = request.form.get('confirm_password')
-        
+
         # Validate current password
         if not current_user.check_password(current_password):
             flash('Current password is incorrect', 'danger')
             return redirect(url_for('admin.admin_profile'))
-        
+
         # Check if new passwords match
         if new_password != confirm_password:
             flash('New passwords do not match', 'danger')
             return redirect(url_for('admin.admin_profile'))
-            
+
         # Password validation
         if len(new_password) < 8:
             flash('Password must be at least 8 characters long', 'danger')
             return redirect(url_for('admin.admin_profile'))
-            
+
         if not re.search(r'\d', new_password):
             flash('Password must contain at least one number', 'danger')
             return redirect(url_for('admin.admin_profile'))
-            
+
         if not re.search(r'[!@#$%^&*(),.?":{}|<>]', new_password):
             flash('Password must contain at least one special character', 'danger')
             return redirect(url_for('admin.admin_profile'))
-        
+
         try:
             current_user.set_password(new_password)
             db.session.commit()
