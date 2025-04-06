@@ -100,16 +100,7 @@ def send_booking_confirmation(current_user,booking, car, fare):
                             <span class="label">Estimated Fare:</span> €{fare:.2f}
                         </div>
                     </div>
-                    
-                    <p>To view your booking details or make changes, please log in to your account.</p>
-                    
-                    <p>If you have any questions about your booking, please contact our customer support at support@cabbooking.com.</p>
-                    
-                    <p>Thank you for choosing our service!</p>
-                </div>
-                <div class="footer">
-                    <p>This is an automated message, please do not reply to this email.</p>
-                    <p>&copy; 2025 Cab Booking Service. All rights reserved.</p>
+                    <p>To view your booking details or make changes, please log in to your account.</p>                    
                 </div>
             </div>
         </body>
@@ -211,14 +202,7 @@ def send_booking_modification_email(user, booking, car, fare, original_data):
                         <div class="detail-row">
                             <span class="label">Estimated Fare:</span> €{fare:.2f}
                         </div>
-                    </div>
-                    
-                    <p>If you did not request this modification or have any questions, please contact our customer support at support@cabbooking.com.</p>
-                    <p>Thank you for choosing our service!</p>
-                </div>
-                <div class="footer">
-                    <p>This is an automated message, please do not reply to this email.</p>
-                    <p>&copy; 2025 Cab Booking Service. All rights reserved.</p>
+                    </div>                    
                 </div>
             </div>
         </body>
@@ -293,12 +277,6 @@ def send_booking_cancellation_email(user, booking):
                         </div>
                     </div>
                     
-                    <p>If this cancellation was made in error or if you need assistance, please contact our customer support at support@cabbooking.com.</p>
-                    <p>We hope to serve you again in the future.</p>
-                </div>
-                <div class="footer">
-                    <p>This is an automated message, please do not reply to this email.</p>
-                    <p>&copy; 2025 Cab Booking Service. All rights reserved.</p>
                 </div>
             </div>
         </body>

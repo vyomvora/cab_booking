@@ -1,15 +1,17 @@
-// Custom JavaScript for the Cab Booking System
-
-// Password validation for the signup form
+// password validation for the signup form
 document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.querySelector('form');
     
     if (signupForm && signupForm.action.includes('signup')) {
         const passwordField = document.getElementById('password');
         const confirmPasswordField = document.getElementById('confirm_password');
+        const phoneField = document.getElementById('phone');
+
         
         passwordField.addEventListener('keyup', validatePassword);
         confirmPasswordField.addEventListener('keyup', validateConfirmPassword);
+        phoneField.addEventListener('keyup', validatePhone);
+
         
         signupForm.addEventListener('submit', function(event) {
             if (!isPasswordValid(passwordField.value)) {
@@ -19,10 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 alert('Passwords do not match.');
             }
+            else if (!validatePhone(phoneField.value)) {
+                event.preventDefault();
+                alert('Phone number must be 10 digits.');
+            }    
         });
     }
     
-    // Add animation to flash messages
+    // add animation to flash messages
     const flashMessages = document.querySelectorAll('.alert');
     flashMessages.forEach(message => {
         setTimeout(() => {
@@ -35,14 +41,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Validate password requirements
+// balidate password requirements
 function isPasswordValid(password) {
-    // At least 8 characters, one number, one special character
     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     return regex.test(password);
 }
 
-// Validate password field
 function validatePassword() {
     const password = this.value;
     const messageElement = this.nextElementSibling;
@@ -68,12 +72,24 @@ function validatePassword() {
     }
 }
 
-// Validate confirm password field
 function validateConfirmPassword() {
     const confirmPassword = this.value;
     const password = document.getElementById('password').value;
     
     if (confirmPassword !== password) {
+        this.classList.add('is-invalid');
+        this.classList.remove('is-valid');
+    } else {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+    }
+}
+
+function validatePhone() {
+    const phone = this.value;
+    const phoneRegex = /^\d{10}$/;
+
+    if (!phoneRegex.test(phone)) {
         this.classList.add('is-invalid');
         this.classList.remove('is-valid');
     } else {

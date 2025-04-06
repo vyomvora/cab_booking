@@ -1,5 +1,3 @@
-// Initialize autocomplete functionality
-
 console.log("modify_booking.js loaded");
 function initAutocomplete() {
     const carTypeSelect = document.getElementById("car_type");
@@ -103,15 +101,14 @@ function previewRoute() {
                 document.getElementById("duration").textContent = duration.text;
                 
                 // Get selected car's rate_per_km from data attribute
-                let ratePerKm = 2; // Default rate if none selected
+                let ratePerKm = 2;
                 if (carTypeSelect.value) {
                     const selectedOption = carTypeSelect.options[carTypeSelect.selectedIndex];
                     ratePerKm = parseFloat(selectedOption.getAttribute("data-rate-per-km") || 2);
                 }
                 
-                // Calculate fare using car-specific rate
                 const baseFare = 5;
-                const timeRate = 0.5; // € per minute
+                const timeRate = 0.5; 
                 
                 const distanceKm = distance.value / 1000;
                 const durationMin = duration.value / 60;

@@ -131,11 +131,10 @@ class Booking(db.Model):
 
     booking_time = db.Column(db.DateTime, default=datetime.utcnow)
     journey_date = db.Column(db.DateTime, nullable=False)
-    status = db.Column(db.String(20), default='confirmed')  # confirmed, modified, cancelled
+    status = db.Column(db.String(20), default='confirmed')
     fare = db.Column(db.Float)
-    distance = db.Column(db.Integer)  # in meters
-    duration = db.Column(db.Integer)  # in seconds
+    distance = db.Column(db.Integer)  
+    duration = db.Column(db.Integer) 
     estimated_fare = db.Column(db.Float)
-    # Relationships - use overlaps parameter to avoid the warning
     passenger = db.relationship('User', back_populates='bookings', overlaps="user,bookings")
     vehicle = db.relationship('Car', back_populates='bookings')
