@@ -20,10 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (passwordField.value !== confirmPasswordField.value) {
                 event.preventDefault();
                 alert('Passwords do not match.');
-            }
-            else if (!validatePhone(phoneField.value)) {
-                event.preventDefault();
-                alert('Phone number must be 10 digits.');
             }    
         });
     }
@@ -77,19 +73,6 @@ function validateConfirmPassword() {
     const password = document.getElementById('password').value;
     
     if (confirmPassword !== password) {
-        this.classList.add('is-invalid');
-        this.classList.remove('is-valid');
-    } else {
-        this.classList.remove('is-invalid');
-        this.classList.add('is-valid');
-    }
-}
-
-function validatePhone() {
-    const phone = this.value;
-    const phoneRegex = /^\d{10}$/;
-
-    if (!phoneRegex.test(phone)) {
         this.classList.add('is-invalid');
         this.classList.remove('is-valid');
     } else {
