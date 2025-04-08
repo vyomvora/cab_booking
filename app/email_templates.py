@@ -280,7 +280,7 @@ def send_booking_cancellation_email(user, booking):
                 </div>
             </div>
         </body>
-        </html>
+        </html> 
         """
 
         # Attach HTML content
