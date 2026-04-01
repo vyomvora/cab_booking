@@ -8,8 +8,8 @@ from email.mime.multipart import MIMEMultipart
 #Email configuration
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USERNAME = os.environ.get('EMAIL_USERNAME', 'cabbook66@gmail.com')
-EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'ybxq sheq rjjh lwgv')
+EMAIL_USERNAME = os.environ.get('EMAIL_USERNAME', 'email@gmail.com')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'pass')
 EMAIL_FROM = os.environ.get('EMAIL_FROM', 'Cab Booking Service <noreply@cabbooking.com>')
 
 def send_booking_confirmation(current_user,booking, car, fare):
